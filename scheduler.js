@@ -189,18 +189,40 @@ var games = [
 ];
 
 $(document).ready(function() {
-	/*
-	var debug = {};
-
-	for (var n = 1; n <= 10; n++) {
-		debug[n] = 0;
-	}
+	var r;
+	var temp;
 
 	for (var i = 0; i < games.length; i++) {
-		debug[games[i][0]]++;
-		debug[games[i][1]]++;
+		r = Math.floor(Math.random() * games.length);
+
+		temp = games[i];
+		games[i] = games[r];
+		games[r] = temp;
 	}
 
-	console.log(debug);
-	*/
+
+	var weeks = {};
+	var teams = {};
+
+	for (var week = 1; week <= 16; week++) {
+		weeks[week] = [];
+		teams = {};
+
+		//while (weeks[week].length < 5) {
+		for (var a = 0; a < 5; a++) {
+			for (var n = 0; n < games.length; n++) {
+				var team0 = games[n][0];
+				var team1 = games[n][1];
+
+				if (teams[team0] == null && teams[team1] == null) {
+					teams[team0] = true;
+					teams[team1] = true;
+
+					weeks[week].push(games.splice(n, 1)[0]);
+				}
+			}
+		}
+	}
+
+	console.log(weeks);
 });
