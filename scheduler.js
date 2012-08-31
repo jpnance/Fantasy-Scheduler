@@ -100,6 +100,7 @@ var games = [
 ];
 
 $(document).ready(function() {
+	/*
 	var debug = {};
 
 	for (var n = 1; n <= 12; n++) {
@@ -112,4 +113,83 @@ $(document).ready(function() {
 	}
 
 	console.log(debug);
+	*/
+
+	var r;
+	var temp;
+
+	var weeks = {};
+
+	for (var week = 1; week <= 14; week++) {
+		games = shuffleGames(games);
+
+		weeks[week] = {
+			teams: {},
+			games: []
+		};
+
+		for (var i = 0; i < games.length; i++) {
+			var team0 = games[i][0];
+			var team1 = games[i][1];
+
+			if (weeks[week].teams[team0] == null && weeks[week].teams[team1] == null) {
+				weeks[week].teams[team0] = true;
+				weeks[week].teams[team1] = true;
+
+				weeks[week].games.push(games.splice(i, 1)[0]);
+			}
+		}
+
+		if (weeks[week].games.length < 6) {
+			games = games.concat(weeks[week].games);
+
+			if (week > 1) {
+				games = games.concat(weeks[week-1].games);
+			}
+
+			if (week >= 2) {
+				week -= 2;
+			}
+		}
+
+		/*
+		temp = null;
+
+		while (weeks[week].length < 6) {
+			if (temp == weeks[week].length) {
+				console.log(teams);
+				break;
+			}
+
+			temp = weeks[week].length;
+			for (var i = 0; i < games.length; i++) {
+				var team0 = games[i][0];
+				var team1 = games[i][1];
+
+				if (teams[team0] == null && teams[team1] == null) {
+					teams[team0] = true;
+					teams[team1] = true;
+
+					weeks[week].push(games.splice(i, 1)[0]);
+
+					break;
+				}
+			}
+		}
+		*/
+	}
+
+	console.log(weeks);
 });
+
+function shuffleGames(games) {
+	for (var n = 0; n < games.length; n++) {
+		r = Math.floor(Math.random() * games.length);
+
+		temp = games[n];
+		games[n] = games[r];
+		games[r] = temp;
+	}
+
+	return games;
+}
