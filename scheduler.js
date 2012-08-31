@@ -100,21 +100,6 @@ var games = [
 ];
 
 $(document).ready(function() {
-	/*
-	var debug = {};
-
-	for (var n = 1; n <= 12; n++) {
-		debug[n] = 0;
-	}
-
-	for (var i = 0; i < games.length; i++) {
-		debug[games[i][0]]++;
-		debug[games[i][1]]++;
-	}
-
-	console.log(debug);
-	*/
-
 	var r;
 	var temp;
 
@@ -137,6 +122,11 @@ $(document).ready(function() {
 				weeks[week].teams[team1] = true;
 
 				weeks[week].games.push(games.splice(i, 1)[0]);
+				i--;
+			}
+
+			if (weeks[week].games.length == 6) {
+				break;
 			}
 		}
 
@@ -177,6 +167,16 @@ $(document).ready(function() {
 			}
 		}
 		*/
+	}
+
+	for (var week = 1; week <= 14; week++) {
+		var p = $('<p>');
+
+		for (var i = 0; i < weeks[week].games.length; i++) {
+			p.append($('<span>' + weeks[week].games[i][0] + ' vs. ' + weeks[week].games[i][1] + '</span><br />'));
+		}
+
+		$('body').append(p);
 	}
 
 	console.log(weeks);
