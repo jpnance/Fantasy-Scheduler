@@ -1,3 +1,18 @@
+var owners = {
+	1: 'Schex',
+	2: 'Jake/Luke',
+	3: 'Trevor',
+	4: 'Patrick',
+	5: 'James',
+	6: 'Keyon',
+	7: 'Koci',
+	8: 'Syed',
+	9: 'John',
+	10: 'Daniel',
+	11: 'Mitch',
+	12: 'Charles'
+}
+
 // 1-2-3-4, 5-8-9-12, 6-7-10-11
 var games = [
 	[ 1, 2 ],
@@ -169,15 +184,29 @@ $(document).ready(function() {
 		*/
 	}
 
-	for (var week = 1; week <= 14; week++) {
-		var p = $('<p>');
+	var table = $('<table>');
 
-		for (var i = 0; i < weeks[week].games.length; i++) {
-			p.append($('<span>' + weeks[week].games[i][0] + ' vs. ' + weeks[week].games[i][1] + '</span><br />'));
+	for (var owner = 1; owner <= 12; owner++) {
+		var row = $('<tr>');
+		row.append($('<th>').append(owners[owner]));
+
+		for (var week = 1; week <= 14; week++) {
+
+			for (var i = 0; i < weeks[week].games.length; i++) {
+				if (weeks[week].games[i][0] == owner) {
+					row.append($('<td>').append(owners[weeks[week].games[i][1]]));
+				}
+				else if (weeks[week].games[i][1] == owner) {
+					row.append($('<td>').append(owners[weeks[week].games[i][0]]));
+				}
+			}
+
 		}
 
-		$('body').append(p);
+		table.append(row);
 	}
+
+	$('body').append(table);
 
 	console.log(weeks);
 });
